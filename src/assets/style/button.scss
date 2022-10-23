@@ -1,6 +1,8 @@
 @import "./_variables.scss";
 
 .el-button {
+  border: none;
+
   @extend .font-m;
   border-radius: 24px;
   padding: 10.5px 46.5px;
@@ -10,7 +12,6 @@
     padding: 8.5px 46.5px;
   }
   &.primary {
-    border: none;
     background-color: $darkBlue;
     color: $white;
     &:hover {
@@ -18,7 +19,6 @@
     }
   }
   &.secondary {
-    border: none;
     background-color: $whiteBlue;
     color: $darkBlue;
     &:hover {
@@ -26,11 +26,16 @@
     }
   }
   &.danger {
-    border: none;
     background-color: $red;
     color: $white;
     &:hover {
       background-color: $pink;
     }
+  }
+  &.disabled,
+  &.disabled:hover {
+    background-color: $darkBlue;
+    color: $white;
+    opacity: 0.25;
   }
 }

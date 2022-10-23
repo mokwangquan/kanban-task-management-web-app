@@ -1,7 +1,8 @@
 
 const state = {
-  activeBoardId: 0,
+  activeBoardId: 1,
   isDarkTheme: false,
+  showSidebar: true,
 }
 
 const mutations = {
@@ -10,6 +11,9 @@ const mutations = {
   },
   setActiveBoardId(state, id) {
     state.activeBoardId = id
+  },
+  toggleSidebar(state) {
+    state.showSidebar = !state.showSidebar
   }
 }
 

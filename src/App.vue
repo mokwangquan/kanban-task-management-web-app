@@ -2,15 +2,19 @@
 <template>
   <div id="app">
     <app-sidebar />
+    <div>
+      <app-header />
+    </div>
   </div>
 </template>
 
 <script>
 import AppSidebar from "@/components/app-sidebar.vue"
+import AppHeader from "@/components/app-header.vue"
 
 export default {
   components: {
-    AppSidebar
+    AppSidebar, AppHeader
   },
   computed: { },
   data() {

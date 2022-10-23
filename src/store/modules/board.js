@@ -1,25 +1,58 @@
+import cloneDeep from "lodash/cloneDeep"
 
 const state = {
   allBoards: [
-    { id: 0, name: "Platform Launch" },
-    { id: 1, name: "Marketing Plan" },
-    { id: 2, name: "Roadmap" },
+    { id: 1, name: "Platform Launch", columns: [] },
+    { id: 2, name: "Marketing Plan", columns: [] },
+    { id: 3, name: "Roadmap", columns: [] },
   ],
+}
+
+const actions = {
+  addBoard({ state, commit }, board) {
+    const newId = Math.max.apply(Math, state.allBoards.map(el => el.id))
+    board.id = newId+1
+    commit("addBoard", board)
+    commit('app/setActiveBoardId', board.id, { root: true })
+  },
+  deleteBoard({ state, commit, rootState }) {
+    const deleteId = rootState.app.activeBoardId
+
+    let nextBoardIndex = state.allBoards.findIndex(el => el.id === deleteId) + 1
+    if (!state.allBoards[nextBoardIndex]) nextBoardIndex = 0
+    const nextBoardId = state.allBoards[nextBoardIndex]?.id
+
+    const newList = cloneDeep(state.allBoards).filter(el => el.id !== deleteId)
+
+    commit("replaceAllBoards", newList)
+    if (nextBoardId) {
+      commit('app/setActiveBoardId', nextBoardId, { root: true })
+    }
+  }
 }
 
 const mutations = {
   addBoard(state, board) {
-    const newId = Math.max.apply(Math, state.allBoards.map(el => el.id))
-    console.log(newId)
-    board.id = newId+1
     state.allBoards.push(board)
-    console.log(state.allBoards)
+  },
+  editBoard(state, board) {
+    state.allBoards = state.allBoards.map(el => {
+      if (el.id === board.id) {
+        return board
+      } else {
+        return el
+      }
+    })
+  },
+  replaceAllBoards(state, allBoards) {
+    state.allBoards = allBoards
   }
 }
 
 export default {
   namespaced: true,
   state,
-  mutations
+  mutations,
+  actions
 };
   

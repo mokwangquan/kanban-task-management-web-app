@@ -40,118 +40,48 @@
           <i class="custom-icon icon-dark-theme"/>
         </el-row>
         <el-row class="hide-sidebar-row" type="flex" justify="start">
-          <i class="custom-icon icon-hide-sidebar" @click="showSidebar=false" />
-          <span class="font-m" @click="showSidebar=false">Hide Sidebar</span>
+          <i class="custom-icon icon-hide-sidebar" @click="$store.commit('app/toggleSidebar')" />
+          <span class="font-m" @click="$store.commit('app/toggleSidebar')">Hide Sidebar</span>
         </el-row>
 
       </div>
     </div>
 
-    <div v-else class="show-sidebar-icon" @click="showSidebar=true">
+    <div v-else class="show-sidebar-icon" @click="$store.commit('app/toggleSidebar')">
       <i class="custom-icon icon-show-sidebar" />
     </div>
 
-    <el-dialog
-      title="Add New Board"
+    <add-edit-board-dialog
       :visible.sync="addBoardDialogVisible"
-      :close-on-click-modal="false"
-      :close-on-press-escape="false"
-      width="30%"
-    >
-      <el-form ref="boardForm" :model="boardForm" label-position="top" :rules="boardRules">
-        <el-form-item prop="name" label="Name">
-          <el-input placeholder="e.g. Web Design" v-model="boardForm.name" />
-        </el-form-item>
-        <el-form-item prop="columns" label="Columns">
-          <el-row 
-            type="flex" 
-            justify="space-between"
-            align="middle"
-            v-for="col, index in boardForm.columns"
-            :key="index"
-          >
-            <el-input 
-              placeholder="e.g. Todo" 
-              :value="boardForm.columns[index]" 
-              @input="(val) => changeCol(val, index)"
-            />
-            <i class="custom-icon icon-cross" @click="removeCol(index)" />
-          </el-row>
-        </el-form-item>
-      </el-form>
-
-      <el-button 
-        class="secondary w-100" 
-        @click="boardForm.columns.push('')"
-      >
-        <span class="plus">&plus;</span>
-        Add New Column
-      </el-button>
-
-      <span slot="footer">
-        <el-button 
-          class="primary w-100" 
-          @click="createBoard"
-        >Create New Board</el-button>
-      </span>
-    </el-dialog>
+      isAdding
+    />
+    
   </div>
 </template>
 
 <script>
 import cssVariable from "@/assets/style/_variables.scss"
-import cloneDeep from "lodash/cloneDeep"
 import { mapState } from "vuex"
-
-const newBoardForm = {
-  name: "",
-  columns: ["Todo", "Doing"]
-}
+import addEditBoardDialog from "@/components/add-edit-board-dialog.vue"
 
 export default {
   name: "AppSidebar",
+  components: { addEditBoardDialog },
   data() {
     return {
-      showSidebar: true,
       cssVariable,
       addBoardDialogVisible: false,
-      boardForm: cloneDeep(newBoardForm),
-      boardRules: {
-        name: { required: true, message: "Can't be empty", trigger: "blur" }
-      }
     }
   },
   watch: {
-    addBoardDialogVisible(val) {
-      if (val == true) {
-        this.$refs.boardForm?.resetFields()
-      }
-    }
   },
   computed: {
     boardNum() { return this.allBoards.length },
-    ...mapState("app", ["activeBoardId", "isDarkTheme"]),
+    ...mapState("app", ["activeBoardId", "isDarkTheme", "showSidebar"]),
     ...mapState("board", ["allBoards"]),
   },
   methods: {
-    changeCol(val, index) {
-      this.$set(this.boardForm.columns, index, val)
-    },
-    removeCol(index) {
-      const newCols = cloneDeep(this.boardForm.columns)
-      newCols.splice(index, 1)
-      this.boardForm.columns = newCols
-    },
-    createBoard() {
-      this.$refs.boardForm?.validate(res => {
-        if (!res) return
-        this.boardForm.columns = this.boardForm.columns.filter(el => el && el !== "")
-        this.$store.commit("board/addBoard", cloneDeep(this.boardForm))
-        // todo, create new board with cols if any
-
-        this.addBoardDialogVisible = false
-      })
-    }
+    
   }
 }
 </script>
@@ -161,22 +91,18 @@ export default {
 
 #app-sidebar {
   $marginLeft: 2.5rem;
-  $sidebarWidth: 20vw;
 
   .wrapper {
     border-right: 1px solid $skyBlue;
     width: calc($sidebarWidth - $marginLeft);
     height: 100vh;
 
-    margin: 0 $marginLeft;
+    margin-left: $marginLeft;
     >div:first-child { padding-top: 1.5rem }
   }
 
   .logo-icon {
     margin-bottom: 3rem;
-    height: 25px;
-    width: 152px;
-    background-size: 152px 25px;
   }
 
   .all-board-row {
@@ -203,10 +129,6 @@ export default {
     &.create {
       color: $darkBlue;
     }
-  }
-  .plus {
-    position: relative;
-    bottom: 1px;
   }
 
   .bottom-part {
@@ -243,9 +165,6 @@ export default {
       position: absolute;
       left: 16px;
       top: 18px;
-      width: 20px;
-      height: 14px;
-      background-size: 20px 14px;
     }
   }
   

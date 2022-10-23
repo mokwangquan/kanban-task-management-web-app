@@ -27,6 +27,9 @@ html {
 #app { 
   height: 100%;
   background-color: $white;
+  position: relative;
+  display: flex;
+  flex-direction: row;
 }
 
 *,
@@ -172,3 +175,39 @@ a:hover {
   }
 }
 
+.plus {
+  position: relative;
+  bottom: 1px;
+}
+
+.el-dropdown-menu.el-popper.el-dropdown-menu--medium {
+  min-width: 192px;
+  border-radius: 8px;
+  .font-red:hover {
+    background-color: $pink;
+    color: $white
+  }
+}
+
+.el-message-box {
+  padding: 15px;
+  border-radius: 6px;
+  width: 27vw;
+  .el-message-box__btns {
+    // reverse the button direction
+    display: flex;
+    flex-direction: row-reverse;
+    button {
+      margin: 0;
+      margin-bottom: 10px;
+      &:first-child {
+        margin-left: 5px;
+      }
+    }
+  }
+  &.danger {
+    .el-message-box__header * {
+      color: $red
+    }
+  }
+}
