@@ -1,0 +1,12 @@
+@import "./_variables.scss";
+
+$--color-primary: $darkBlue;
+// $--color-success: #7DC12F;
+// $--color-warning: #ffba00;
+$--color-danger: $red;
+
+/* icon font path, required */
+$--font-path: "~element-ui/lib/theme-chalk/fonts";
+
+@import "~element-ui/packages/theme-chalk/src/index";
+@import '~element-ui/lib/theme-chalk/display.css';

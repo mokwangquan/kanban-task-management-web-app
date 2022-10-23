@@ -1,0 +1,50 @@
+@import "./_variables.scss";
+
+@font-face {
+  font-family: "SPlusJakartaSans";
+  font-weight: 400;
+  font-style: normal;
+  font-display: auto;
+  unicode-range: U+000-5FF;
+  src: local("SourceSansPro"),
+    url("/fonts/PlusJakartaSans-VariableFont_wght.ttf") format("truetype")
+}
+
+.font-xl {
+  font-weight: bolder;
+  font-size: 24px;
+  line-height: 30px;
+}
+
+.font-l {
+  font-weight: bolder;
+  font-size: 18px;
+  line-height: 23px;
+}
+
+.font-m {
+  font-weight: bolder;
+  font-size: 15px;
+  line-height: 19px;
+}
+
+.font-s {
+  font-weight: bolder;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 4px;
+  font-kerning: normal;
+  color: $lightGrey;
+}
+
+.font-normal {
+  font-size: 13px;
+  line-height: 23px;
+  font-weight: 500;
+}
+
+.font-bold {
+  font-weight: bolder;
+  font-size: 12px;
+  line-height: 15px;
+}
