@@ -13,7 +13,13 @@ require("./utils/imports");
  **************************************************************************/
 Vue.config.productionTip = false;
 
-document.title = process.env.VUE_APP_TITLE
+Array.prototype.max = function() {
+  return Math.max.apply(null, this);
+};
+
+Array.prototype.min = function() {
+  return Math.min.apply(null, this);
+};
 
 export default new Vue({
   store,
