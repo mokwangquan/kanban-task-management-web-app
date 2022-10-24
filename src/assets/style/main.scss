@@ -66,8 +66,10 @@ a:hover {
 .el-checkbox.is-bordered.el-checkbox--medium {
   @extend .w-100;
   padding: 12px 20px 12px 20px;
-  height: 45px;
+  min-height: 45px;
+  height: fit-content;
   border: none;
+  display: table;
 
   background-color: $whiteBlue;
   &:hover {
@@ -81,6 +83,11 @@ a:hover {
   .el-checkbox__label {
     @extend .font-bold;
     padding-left: 15px;
+  }
+
+  .el-checkbox__input {
+    display: table-cell;
+    vertical-align: middle;
   }
 
   .el-checkbox__inner {

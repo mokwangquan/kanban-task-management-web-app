@@ -11,6 +11,10 @@
       :visible.sync="addEditBoardDialogVisible"
       :isAdding="isAddingBoard"
     />
+    <view-task-dialog
+      :visible.sync="viewTaskDialogVisible"
+      :taskObj.sync="viewingTask"
+    />
   </div>
 </template>
 
@@ -19,11 +23,12 @@ import AppSidebar from "@/components/app-sidebar.vue"
 import AppHeader from "@/components/app-header.vue"
 import MainContent from "@/components/main-content.vue"
 import AddEditBoardDialog from "@/components/add-edit-board-dialog.vue"
+import ViewTaskDialog from "@/components/view-task-dialog.vue"
 import { EventBus } from "@/utils/event-bus.js"
 
 export default {
   components: {
-    AppSidebar, AppHeader, MainContent, AddEditBoardDialog
+    AppSidebar, AppHeader, MainContent, AddEditBoardDialog, ViewTaskDialog
   },
   computed: { },
   data() {
@@ -31,6 +36,7 @@ export default {
       addEditBoardDialogVisible: false,
       isAddingBoard: false,
       viewTaskDialogVisible: false,
+      viewingTask: {},
     }
   },
   watch: { },
@@ -40,8 +46,9 @@ export default {
       this.addEditBoardDialogVisible = true
       this.isAddingBoard = isAddingBoard
     });
-    EventBus.$on("openViewTaskDialog", () => {
+    EventBus.$on("openViewTaskDialog", (viewingTask) => {
       this.viewTaskDialogVisible = true
+      this.viewingTask = viewingTask
     });
   },
 };

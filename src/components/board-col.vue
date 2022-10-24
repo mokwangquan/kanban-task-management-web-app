@@ -15,6 +15,7 @@
         type="flex"
         justify="start"
       >
+      <!-- TODO: dont keep change the color, save it -->
         <div 
           class="colored-dot"
           :style="`background-color: ${$randomColor()}`"
@@ -27,7 +28,7 @@
         v-for="task, index in colObj.tasks"
         :key="'col_'+colIndex+'_task_'+index"
         class="task-block"
-        @click="EventBus.$emit('openViewTaskDialog', task)"
+        @click.native="EventBus.$emit('openViewTaskDialog', task)"
       >
         <div class="font-m">{{ task.title }}</div>
         <div class="font-normal">{{ getSubDoneCount(task) }} subtasks</div>

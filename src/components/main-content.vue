@@ -62,6 +62,7 @@ export default {
   flex-direction: column;
   overflow: hidden;
   width: 100vw;
+  height: calc(100vh - $headerHeight);
 
   &.with-sidebar {
     width: calc(100vw - $sidebarWidth);
@@ -89,6 +90,9 @@ export default {
       width: fit-content;
       &:first-child {
         margin-left: 1rem;
+      }
+      &:last-child {
+        margin-bottom: 4rem;
       }
     }
   }
