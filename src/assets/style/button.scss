@@ -5,7 +5,10 @@
 
   @extend .font-m;
   border-radius: 24px;
-  padding: 10.5px 46.5px;
+  padding: 10.5px 20.5px;
+  .with-extra-padding {
+    padding: 10.5px 46.5px;
+  }
   &.size-s {
     @extend .font-bold;
     border-radius: 20px;

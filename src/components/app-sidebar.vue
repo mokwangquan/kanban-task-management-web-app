@@ -24,7 +24,7 @@
 
       <el-row 
         class="board-row create"
-        @click.native="addBoardDialogVisible=true"
+        @click.native="EventBus.$emit('openAddEditBoardDialog', true)"
         type="flex" 
         justify="start" 
         align="middle"
@@ -50,11 +50,6 @@
     <div v-else class="show-sidebar-icon" @click="$store.commit('app/toggleSidebar')">
       <i class="custom-icon icon-show-sidebar" />
     </div>
-
-    <add-edit-board-dialog
-      :visible.sync="addBoardDialogVisible"
-      isAdding
-    />
     
   </div>
 </template>
@@ -62,15 +57,14 @@
 <script>
 import cssVariable from "@/assets/style/_variables.scss"
 import { mapState } from "vuex"
-import addEditBoardDialog from "@/components/add-edit-board-dialog.vue"
+import { EventBus } from "@/utils/event-bus.js"
 
 export default {
   name: "AppSidebar",
-  components: { addEditBoardDialog },
   data() {
     return {
       cssVariable,
-      addBoardDialogVisible: false,
+      EventBus,
     }
   },
   watch: {
@@ -91,11 +85,16 @@ export default {
 
 #app-sidebar {
   $marginLeft: 2.5rem;
+  background-color: $white;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 999;
 
   .wrapper {
     border-right: 1px solid $skyBlue;
     width: calc($sidebarWidth - $marginLeft);
-    height: 100vh;
+    height: 100%;
 
     margin-left: $marginLeft;
     >div:first-child { padding-top: 1.5rem }

@@ -10,9 +10,8 @@ body {
   text-rendering: optimizeLegibility;
   font-family: "SPlusJakartaSans";
   margin: 0;
+  overflow: hidden;
 }
-
-body::-webkit-scrollbar { display: none } // hide scrollbar
 
 label { font-weight: 700 }
 

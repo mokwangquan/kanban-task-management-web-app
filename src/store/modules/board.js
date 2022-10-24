@@ -1,11 +1,8 @@
 import cloneDeep from "lodash/cloneDeep"
+import dummyData from "@/constants/data.json"
 
 const state = {
-  allBoards: [
-    { id: 1, name: "Platform Launch", columns: [] },
-    { id: 2, name: "Marketing Plan", columns: [] },
-    { id: 3, name: "Roadmap", columns: [] },
-  ],
+  allBoards: cloneDeep(dummyData.boards),
 }
 
 const actions = {

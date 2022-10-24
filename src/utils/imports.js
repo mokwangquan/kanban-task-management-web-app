@@ -9,6 +9,10 @@ Vue.use(ElementUI, {
   locale: enLang //  set element-ui default language
 })
 
+import VueRandomColor from 'vue-randomcolor'
+ 
+Vue.use(VueRandomColor)
+
 window.Vue = Vue;
 
 // Dont import everything here

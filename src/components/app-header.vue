@@ -22,7 +22,7 @@
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item 
               class="font-l font-grey" 
-              @click.native="editBoardDialogVisible=true"
+              @click.native="EventBus.$emit('openAddEditBoardDialog')"
             >Edit Board</el-dropdown-item>
             <el-dropdown-item 
               class="font-l font-red"
@@ -33,22 +33,18 @@
       </el-row>
     </el-row>
 
-    <add-edit-board-dialog
-      :visible.sync="editBoardDialogVisible"
-    />
   </div>
 </template>
 
 <script>
 import { mapState, mapGetters } from "vuex"
-import addEditBoardDialog from "@/components/add-edit-board-dialog.vue"
+import { EventBus } from "@/utils/event-bus.js"
 
 export default {
   name: "AppHeader",
-  components: { addEditBoardDialog },
   data() {
     return {
-      editBoardDialogVisible: false
+      EventBus,
     }
   },
   computed: {
@@ -93,9 +89,13 @@ export default {
   width: calc(100vw - $sidebarWidth);
   border-bottom: 1px solid $skyBlue;
   background-color: $white;
+  position: sticky;
+  top: 0;
+  left: $sidebarWidth;
 
   &.with-sidebar-hidden {
     width: calc(100vw);
+    left: 0;
   }
 
   >.el-row {
@@ -111,9 +111,6 @@ export default {
         width: 100%;
       }
       height: 100%;
-      .el-button {
-        padding: 10.5px 20.5px;
-      }
       .icon-vertical-ellipsis {
         padding: 14px;
         margin-top: 8px;

@@ -14,10 +14,12 @@
     "localstorage-slim": "^2.2.0",
     "moment": "^2.8.1",
     "node-sass": "^7.0.1",
+    "randomcolor": "^0.6.2",
     "sass": "^1.47.0",
     "sass-loader": "^10.1.1",
     "style-loader": "^3.3.1",
     "vue": "^2.6.14",
+    "vue-randomcolor": "^1.0.4",
     "vuex": "^3.6.2"
   },
   "devDependencies": {

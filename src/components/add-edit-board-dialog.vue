@@ -5,6 +5,7 @@
     :visible.sync="dialogVisible"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
+    :modal-append-to-body="false"
     width="30%"
   >
     <el-form ref="boardForm" :model="boardForm" label-position="top" :rules="boardRules">
@@ -21,7 +22,7 @@
         >
           <el-input 
             placeholder="e.g. Todo" 
-            :value="boardForm.columns[index]" 
+            :value="col.name" 
             @input="(val) => changeCol(val, index)"
           />
           <i class="custom-icon icon-cross" @click="removeCol(index)" />
@@ -31,7 +32,7 @@
 
     <el-button 
       class="secondary w-100" 
-      @click="boardForm.columns.push('')"
+      @click="boardForm.columns.push({ name: '' })"
     >
       <span class="plus">&plus;</span>
       Add New Column
@@ -52,7 +53,10 @@ import { mapGetters } from "vuex"
 
 const newBoardForm = {
   name: "",
-  columns: ["Todo", "Doing"]
+  columns: [
+    { name: "Todo" }, 
+    { name: "Doing" }
+  ]
 }
 
 export default {
@@ -89,7 +93,9 @@ export default {
   },
   methods: {
     changeCol(val, index) {
-      this.$set(this.boardForm.columns, index, val)
+      const newCol = this.boardForm.columns[index]
+      newCol.name = val
+      this.$set(this.boardForm.columns, index, newCol)
     },
     removeCol(index) {
       const newCols = cloneDeep(this.boardForm.columns)
@@ -108,11 +114,11 @@ export default {
       })
     },
     createBoard() {
-      this.boardForm.columns = this.boardForm.columns.filter(el => el && el !== "")
+      this.boardForm.columns = this.boardForm.columns.filter(el => el.name && el.name !== "")
       this.$store.dispatch("board/addBoard", cloneDeep(this.boardForm))
     },
     editBoard() {
-      this.boardForm.columns = this.boardForm.columns.filter(el => el && el !== "")
+      this.boardForm.columns = this.boardForm.columns.filter(el => el.name && el.name !== "")
       this.$store.commit("board/editBoard", cloneDeep(this.boardForm))
     }
   }
