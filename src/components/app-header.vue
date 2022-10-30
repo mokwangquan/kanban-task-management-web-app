@@ -13,6 +13,7 @@
           class="primary"
           :class="{ disabled: !canAddTask }"
           :disabled="!canAddTask"
+          @click="EventBus.$emit('openAddEditTaskDialog')"
         >
           <span class="plus">&plus;</span>
           Add New Task

@@ -18,9 +18,9 @@
       <!-- TODO: dont keep change the color, save it -->
         <div 
           class="colored-dot"
-          :style="`background-color: ${$randomColor()}`"
+          :style="`background-color: ${colObj.color}`"
         >&nbsp;</div>
-        <div class="font-s">{{ colObj.name }} ({{ 4 }})</div>
+        <div class="font-s">{{ colObj.name }} ({{ noOfTask }})</div>
       </el-row>
 
       <!-- Task -->
@@ -50,6 +50,11 @@ export default {
   data() {
     return {
       EventBus,
+    }
+  },
+  computed: {
+    noOfTask() {
+      return this.colObj?.tasks?.length || 0
     }
   },
   methods: {

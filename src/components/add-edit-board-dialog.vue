@@ -8,7 +8,13 @@
     :modal-append-to-body="false"
     width="30%"
   >
-    <el-form ref="boardForm" :model="boardForm" label-position="top" :rules="boardRules">
+    <el-form 
+      ref="boardForm" 
+      :model="boardForm" 
+      label-position="top" 
+      :rules="boardRules"
+      @submit.native.prevent="handleSubmit"
+    >
       <el-form-item prop="name" label="Name">
         <el-input placeholder="e.g. Web Design" v-model="boardForm.name" />
       </el-form-item>
@@ -27,6 +33,8 @@
           />
           <i class="custom-icon icon-cross" @click="removeCol(index)" />
         </el-row>
+
+        <el-button native-type="submit" />
       </el-form-item>
     </el-form>
 
@@ -97,16 +105,45 @@ export default {
       newCol.name = val
       this.$set(this.boardForm.columns, index, newCol)
     },
-    removeCol(index) {
+    async removeCol(index) {
       const newCols = cloneDeep(this.boardForm.columns)
-      newCols.splice(index, 1)
-      this.boardForm.columns = newCols
+      let canProceed = false
+
+      if (newCols[index]?.tasks?.length > 0) {
+        await this.$confirm(
+          `Are you sure you want to delete the '${newCols[index].name}' column? This action will remove all task(s) inside and cannot be reversed.`,
+          "Delete this column?",
+          {
+            confirmButtonText: 'Delete',
+            confirmButtonClass: 'danger w-100',
+            cancelButtonText: 'Cancel',
+            cancelButtonClass: "secondary w-100",
+            customClass: "danger",
+            showClose: false,
+          }
+        )
+        .then(yes => {
+          if (yes) {
+            canProceed = true
+          }
+        })
+        .catch(() => {})
+        
+      } else {
+        canProceed = true
+      }
+
+      if (canProceed) {
+        newCols.splice(index, 1)
+        this.boardForm.columns = newCols
+      }
     },
     handleSubmit() {
       this.$refs.boardForm?.validate(res => {
         if (!res) return
         if (this.isAdding) {
           this.createBoard()
+          this.boardForm = cloneDeep(newBoardForm)
         } else {
           this.editBoard()
         }
@@ -114,7 +151,12 @@ export default {
       })
     },
     createBoard() {
-      this.boardForm.columns = this.boardForm.columns.filter(el => el.name && el.name !== "")
+      this.boardForm.columns = this.boardForm.columns
+                      .filter(el => el.name && el.name !== "")
+                      .map(el => {
+                        el.color = this.$randomColor()
+                        return el
+                      })
       this.$store.dispatch("board/addBoard", cloneDeep(this.boardForm))
     },
     editBoard() {

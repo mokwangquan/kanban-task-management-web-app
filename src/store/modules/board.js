@@ -1,14 +1,19 @@
 import cloneDeep from "lodash/cloneDeep"
-import dummyData from "@/constants/data.json"
 
 const state = {
-  allBoards: cloneDeep(dummyData.boards),
+  allBoards: [],
 }
 
 const actions = {
   addBoard({ state, commit }, board) {
-    const newId = Math.max.apply(Math, state.allBoards.map(el => el.id))
-    board.id = newId+1
+    if (!board.id) {
+      if (state.allBoards.length > 1) {
+        const newId = Math.max.apply(Math, state.allBoards.map(el => el.id))
+        board.id = newId+1
+      } else {
+        board.id = 1
+      }
+    }
     commit("addBoard", board)
     commit('app/setActiveBoardId', board.id, { root: true })
   },

@@ -34,23 +34,31 @@
         </el-select>
       </el-form-item>
     </el-form>
+
+    <span slot="footer">
+      <el-button 
+        class="primary w-100" 
+        @click="EventBus.$emit('openAddEditTaskDialog', taskObj)"
+      >Edit Task</el-button>
+    </span>
     
   </el-dialog>
 </template>
 
 <script>
 import { mapGetters } from "vuex"
+import { EventBus } from "@/utils/event-bus.js"
 import cloneDeep from "lodash/cloneDeep"
 
 export default {
-  name: "AddEditBoardDialog",
+  name: "ViewTaskDialog",
   props: {
     visible: { required: true, type: Boolean },
     taskObj: { type: Object },
   },
   data() {
     return {
-      
+      EventBus
     }
   },
   watch: {
@@ -83,7 +91,6 @@ export default {
     checkSubtask(id) {
       let newBoard = cloneDeep(this.activeBoard)
       const currentStatus = this.taskObj.status
-      let newTask
 
       newBoard.columns = newBoard.columns
       .map(el => {
@@ -91,18 +98,19 @@ export default {
           el.tasks = el.tasks.map(task => {
             if (task.id === this.taskObj.id) {
               task.subtasks = task.subtasks.map(sub => {
-                if (sub.id === id) sub.isCompleted = !sub.isCompleted
+                if (sub.id === id) {
+                  sub.isCompleted = !sub.isCompleted
+                }
                 return sub
               })
+              this.$emit("update:taskObj", cloneDeep(task))
             }
-            newTask = cloneDeep(task)
             return task
           })
         }
         return el
       })
 
-      this.$emit("update:taskObj", newTask)
 
       this.$store.commit("board/editBoard", newBoard)
     },
