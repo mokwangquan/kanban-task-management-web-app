@@ -15,7 +15,6 @@
         type="flex"
         justify="start"
       >
-      <!-- TODO: dont keep change the color, save it -->
         <div 
           class="colored-dot"
           :style="`background-color: ${colObj.color}`"
