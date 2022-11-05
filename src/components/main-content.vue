@@ -88,6 +88,7 @@ export default {
     .el-col {
       margin: 1rem 1rem 0 0;
       width: fit-content;
+      height: fit-content;
       &:first-child {
         margin-left: 1rem;
       }

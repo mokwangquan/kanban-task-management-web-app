@@ -119,6 +119,9 @@ export default {
       const currentStatus = this.taskObj.status
       let taskObjToMove
 
+      console.log(this.taskObj)
+      console.log(newBoard)
+
       newBoard.columns = newBoard.columns
       // remove
       .map(el => {

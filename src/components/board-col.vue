@@ -78,7 +78,7 @@ export default {
   width: 23vw;
 
   .adding-col {
-    height: 100%;
+    height: 80vh;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -175,14 +175,20 @@ export default {
       const boardCol = newBoard.columns.find(el => el.name === this.taskForm.status)
 
       let newId = 1
-      if (boardCol.tasks.length > 0) {
+      if (boardCol.tasks?.length > 0) {
         newId = Math.max.apply(Math, boardCol.tasks.map(el => el.id)) + 1
       }
-      this.taskForm.id = newId
+      editedTask.id = newId
+
+      console.log("id -> " + newId)
 
       newBoard.columns = newBoard.columns.map(col => {
-        if (col.name === this.taskForm.status) {
-          col.tasks.push(editedTask)
+        if (col.name === editedTask.status) {
+          if (col.tasks) {
+            col.tasks.push(editedTask)
+          } else {
+            col.tasks = [editedTask]
+          }
         }
         return col
       })
