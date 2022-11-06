@@ -32,12 +32,15 @@ import AddEditTaskDialog from "@/components/add-edit-task-dialog.vue"
 import { EventBus } from "@/utils/event-bus.js"
 import dummyData from "@/constants/data.json"
 import cloneDeep from "lodash/cloneDeep"
+import { mapState } from "vuex"
 
 export default {
   components: {
     AppSidebar, AppHeader, MainContent, AddEditBoardDialog, ViewTaskDialog, AddEditTaskDialog
   },
-  computed: { },
+  computed: {
+    ...mapState("app", ["isDarkTheme"]),
+  },
   data() {
     return {
       addEditBoardDialogVisible: false,
@@ -48,7 +51,15 @@ export default {
       editingTask: {},
     }
   },
-  watch: { },
+  watch: {
+    isDarkTheme(val) {
+      if (val) {
+        document.body.classList.add("dark")
+      } else {
+        document.body.classList.remove("dark")
+      }
+    }
+  },
   methods: { 
     resetDialog() {
       this.addEditBoardDialogVisible = false
@@ -88,6 +99,12 @@ export default {
       this.$store.dispatch("board/addBoard", cloneDeep(board))
     })
     this.$store.commit('app/setActiveBoardId', dummyData.boards[0].id)
+
+    if (this.isDarkTheme) {
+      document.body.classList.add("dark")
+    } else {
+      document.body.classList.remove("dark")
+    }
   },
 };
 </script>

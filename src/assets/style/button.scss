@@ -42,3 +42,12 @@
     opacity: 0.25;
   }
 }
+
+.dark .el-button {
+  &.secondary {
+    &:hover {
+      background-color: $whiteBlue;
+      color: $darkBlue;
+    }
+  }
+}

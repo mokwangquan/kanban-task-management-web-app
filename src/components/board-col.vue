@@ -83,6 +83,7 @@ export default {
     justify-content: center;
     align-items: center;
     background-color: $skyBlue;
+    color: $lightGrey;
     margin-top: 3rem;
     border-radius: 6px;
     cursor: pointer;
@@ -109,6 +110,22 @@ export default {
     >div:first-child {
       margin-bottom: 0.5rem;
     }
+  }
+}
+
+.dark .board-col {
+  .task-block {
+    background-color: $darkGrey;
+    box-shadow: 2px 5px 5px $darkGrey;
+    color: $white;
+    .font-normal {
+      color: $lightGrey;
+      font-weight: bold;
+    }
+  }
+  .adding-col {
+    background-color: $darkGrey;
+    opacity: 0.25;
   }
 }
 </style>

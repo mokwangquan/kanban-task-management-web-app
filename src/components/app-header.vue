@@ -3,7 +3,7 @@
     <el-row type="flex" justify="space-between" align="middle">
       <el-row type="flex" justify="start" align="middle">
         <span v-if="!showSidebar" class="logo-wrapper">
-          <i class="custom-icon logo-dark" />
+          <i class="custom-icon logo-dark" :class="{ 'logo-light': isDarkTheme }" />
         </span>
         <el-divider v-if="!showSidebar" direction="vertical" />
         <span class="font-xl">{{ name }}</span>
@@ -49,7 +49,7 @@ export default {
     }
   },
   computed: {
-    ...mapState("app", ["showSidebar"]),
+    ...mapState("app", ["showSidebar", "isDarkTheme"]),
     ...mapGetters(["activeBoard"]),
     name() {
       return this.activeBoard?.name
@@ -118,6 +118,19 @@ export default {
         cursor: pointer;
         margin-left: 1.5rem
       }
+    }
+  }
+
+}
+
+.dark #app-header {
+  background-color: $darkGrey;
+  color: $white;
+  border-color: $grey;
+
+  >.el-row {
+    .el-divider.el-divider--vertical { 
+      background-color: $grey;
     }
   }
 

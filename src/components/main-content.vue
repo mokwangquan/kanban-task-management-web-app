@@ -98,4 +98,8 @@ export default {
     }
   }
 }
+
+.dark #main-content {
+  background-color: $lightBlack;
+}
 </style>

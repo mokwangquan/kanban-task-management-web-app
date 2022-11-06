@@ -49,5 +49,6 @@
   line-height: 15px;
 }
 
-.font-red { color: $red }
-.font-grey { color: $lightGrey }
+.font-red { color: $red !important }
+.font-grey { color: $lightGrey !important }
+.font-primary { color: $darkBlue !important }

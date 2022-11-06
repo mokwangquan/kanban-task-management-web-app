@@ -1,5 +1,6 @@
 <template>
   <el-dialog
+    id="add-task-dialog"
     v-if="dialogVisible"
     :title="isAdding ? 'Add New Task' : 'Edit Task'"
     :visible.sync="dialogVisible"
@@ -24,7 +25,7 @@
           v-model="taskForm.description" 
         />
       </el-form-item>
-      <el-form-item prop="subtasks" label="Subtasks">
+      <el-form-item prop="subtasks" label="Subtasks" class="subtask-container">
         <el-row 
           type="flex" 
           justify="space-between"
@@ -40,11 +41,11 @@
           <i class="custom-icon icon-cross" @click="removeSubtask(index)" />
         </el-row>
 
-        <el-button native-type="submit" />
+        <el-button native-type="submit" style="display: none;"/>
       </el-form-item>
 
       <el-button 
-        class="secondary w-100" 
+        class="secondary add-new-task-btn w-100" 
         @click="taskForm.subtasks.push({ title: '' })"
       >
         <span class="plus">&plus;</span>
@@ -180,8 +181,6 @@ export default {
       }
       editedTask.id = newId
 
-      console.log("id -> " + newId)
-
       newBoard.columns = newBoard.columns.map(col => {
         if (col.name === editedTask.status) {
           if (col.tasks) {
@@ -208,7 +207,6 @@ export default {
       if (boardCol.tasks.length > 0) {
         newId = Math.max.apply(Math, boardCol.tasks.map(el => el.id)) + 1
       }
-
       
 
       if (newStatus !== oldStatus) {
@@ -263,5 +261,14 @@ export default {
       white-space: initial;
     }
   }
+  .add-new-task-btn {
+    margin-bottom: 2rem;
+  }
+  .subtask-container {
+    .el-form .el-form-item__error {
+      right: 50px;
+    }
+  }
+
 }
 </style>

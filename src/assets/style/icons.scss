@@ -10,6 +10,7 @@
 .white-icon { filter: brightness(0) invert(1) }
 .black-icon { filter: invert(100%) }
 .primary-icon { filter: invert(36%) sepia(72%) saturate(647%) hue-rotate(206deg) brightness(92%) contrast(85%) }
+.red-icon { filter: invert(39%) sepia(65%) saturate(1042%) hue-rotate(322deg) brightness(99%) contrast(86%) }
 
 .icon-add-task-mobile {
   background-image: url('assets/svgs/icon-add-task-mobile.svg')
@@ -27,7 +28,10 @@
   background-image: url('assets/svgs/icon-chevron-up.svg') 
 } // TODO
 .icon-cross {
-  background-image: url('assets/svgs/icon-cross.svg')
+  background-image: url('assets/svgs/icon-cross.svg');
+  &:hover {
+    @extend .red-icon
+  }
 }
 .icon-dark-theme {
   background-image: url('assets/svgs/icon-dark-theme.svg')

@@ -1,7 +1,7 @@
 
 const state = {
   activeBoardId: 1,
-  isDarkTheme: false,
+  isDarkTheme: true,
   showSidebar: true,
 }
 

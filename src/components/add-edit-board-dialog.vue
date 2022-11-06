@@ -34,7 +34,7 @@
           <i class="custom-icon icon-cross" @click="removeCol(index)" />
         </el-row>
 
-        <el-button native-type="submit" />
+        <el-button native-type="submit" style="display: none" />
       </el-form-item>
     </el-form>
 

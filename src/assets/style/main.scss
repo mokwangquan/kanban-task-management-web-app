@@ -106,9 +106,29 @@ a:hover {
 
   &.is-checked {
     .el-checkbox__label {
-      opacity: 0.5;
+      opacity: 0.5; 
       text-decoration: line-through;
       @extend .font-bold;
+    }
+  }
+}
+
+.dark .el-checkbox.is-bordered.el-checkbox--medium {
+  background-color: rgba(99, 95, 199, 0.25);
+  .el-checkbox__label {
+    color: $white;
+  }
+  .el-checkbox__inner {
+    background-color: $darkGrey
+  }
+  &.is-checked {
+    background-color: $lightBlack;
+    .el-checkbox__label {
+      @extend .font-grey;
+      background-color: $darkGrey;
+    }
+    .el-checkbox__inner {
+      background-color: $darkBlue
     }
   }
 }
@@ -167,9 +187,47 @@ a:hover {
   }
 }
 
+.dark .el-form {
+  .el-input--medium .el-input__inner {
+    background-color: $darkGrey;
+    border-color: rgba(130, 143, 163, 0.25);
+    color: $white;
+  }
+  .el-form-item__label {
+    color: $white;
+  }
+  ::placeholder, /* Chrome, Firefox, Opera, Safari 10.1+ */
+  :-ms-input-placeholder, /* Internet Explorer 10-11 */
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    color: red;
+    opacity: 0.1; /* Firefox */
+    // TODO: why placeholder no change color
+  }
+}
+
+.el-select-dropdown.el-popper {
+  .popper__arrow {
+    display: none;
+  }
+}
+.dark .el-select-dropdown.el-popper {
+  border-color: $lightBlack;
+  .el-scrollbar {
+    background-color: $lightBlack;
+    .el-select-dropdown__item {
+      &.hover,
+      &:hover {
+        background-color: $darkBlue;
+        color: $white;
+      }
+    }
+  }
+}
+
 .el-dialog {
   border-radius: 6px;
   padding: 12px;
+  .el-dialog__header,
   .el-dialog__title {
     @extend .font-l;
   }
@@ -182,11 +240,20 @@ a:hover {
   }
 }
 
+.dark .el-dialog {
+  background-color: $darkGrey;
+  .el-dialog__header,
+  .el-dialog__title {
+    * { color: $white }
+  }
+}
+
 .plus {
   position: relative;
   bottom: 1px;
 }
 
+.el-dropdown { cursor: pointer }
 .el-dropdown-menu.el-popper.el-dropdown-menu--medium {
   min-width: 192px;
   border-radius: 8px;

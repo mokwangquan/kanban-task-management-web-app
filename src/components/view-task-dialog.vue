@@ -2,12 +2,28 @@
   <el-dialog
     id="view-task-dialog"
     v-if="dialogVisible && taskObj"
-    :title="taskObj.title"
     :visible.sync="dialogVisible"
     :show-close="false"
     :modal-append-to-body="false"
     width="30%"
   >
+    <el-row slot="title" type="flex" justify="space-between" align="middle">
+      <div>{{ taskObj.title }}</div>
+      <el-dropdown trigger="click">
+        <i class="custom-icon icon-vertical-ellipsis" />
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item 
+            class="font-l font-grey" 
+            @click.native="EventBus.$emit('openAddEditTaskDialog', taskObj)"
+          >Edit Task</el-dropdown-item>
+          <el-dropdown-item 
+            class="font-l font-red"
+            @click.native="deleteTask"
+          >Delete Task</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </el-row>
+
     <p class="font-normal font-grey">
       {{ taskObj.description }}
     </p>
@@ -34,13 +50,6 @@
         </el-select>
       </el-form-item>
     </el-form>
-
-    <span slot="footer">
-      <el-button 
-        class="primary w-100" 
-        @click="EventBus.$emit('openAddEditTaskDialog', taskObj)"
-      >Edit Task</el-button>
-    </span>
     
   </el-dialog>
 </template>
@@ -119,9 +128,6 @@ export default {
       const currentStatus = this.taskObj.status
       let taskObjToMove
 
-      console.log(this.taskObj)
-      console.log(newBoard)
-
       newBoard.columns = newBoard.columns
       // remove
       .map(el => {
@@ -149,7 +155,39 @@ export default {
       this.$emit("update:taskObj", taskObjToMove)
 
       this.$store.commit("board/editBoard", newBoard)
-    }
+    },
+    deleteTask() {
+      this.$confirm(
+        `Are you sure you want to delete this task? This action will remove all subtasks and cannot be reversed.`,
+        "Delete this task?",
+        {
+          confirmButtonText: 'Delete',
+          confirmButtonClass: 'danger w-100',
+          cancelButtonText: 'Cancel',
+          cancelButtonClass: "secondary w-100",
+          customClass: "danger",
+          showClose: false,
+        }
+      )
+      .then(yes => {
+        if (yes) {
+          const newBoard = cloneDeep(this.activeBoard)
+
+          newBoard.columns = newBoard.columns.map(col => {
+            if (col.name === this.taskObj.status) {
+              col.tasks = col.tasks.filter(el => {
+                return el.id !== this.taskObj.id
+              })
+            }
+            return col
+          })
+
+          this.$store.commit("board/editBoard", newBoard)
+
+          this.dialogVisible = false
+        }
+      })
+    },
   }
 }
 </script>
@@ -165,6 +203,11 @@ export default {
     .el-checkbox__label {
       white-space: initial;
     }
+  }
+
+  .custom-icon.icon-vertical-ellipsis {
+    padding: 10px;
+    margin-right: 5px;
   }
 }
 </style>

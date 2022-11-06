@@ -3,7 +3,7 @@
     <div class="wrapper" v-if="showSidebar">
 
       <div>
-        <i class="logo-icon custom-icon logo-dark" />
+        <i class="logo-icon custom-icon logo-dark" :class="{ 'logo-light': isDarkTheme }" />
       </div>
       
       <div class="font-s all-board-row">ALL BOARDS ({{ boardNum }})</div>
@@ -30,7 +30,7 @@
         align="middle"
       >
         <i class="custom-icon icon-board primary-icon" />
-        <div class="font-m"><span class="plus">&plus;</span> Create New Board</div>
+        <div class="font-m font-primary"><span class="plus">&plus;</span> Create New Board</div>
       </el-row>
 
       <div class="bottom-part">
@@ -167,5 +167,25 @@ export default {
     }
   }
   
+}
+
+.dark #app-sidebar {
+  background-color: $darkGrey;
+
+  .wrapper {
+    border-color: $grey;
+  }
+
+  .board-row {
+    background-color: $darkGrey;
+    color: $lightGrey;
+    &.active {
+      background-color: $darkBlue;
+      color: $white;
+    }
+  }
+  .theme-switch-row {
+    background-color: $lightBlack;
+  }
 }
 </style>
